@@ -21,7 +21,7 @@ composer-install:
 	docker-compose run --rm php-cli composer install
 
 app-permissions:
-	docker run --rm -v ${PWD}:/app -w /app alpine chmod 777 var
+	docker run --rm -v ${PWD}:/app -w /app alpine chmod 777 var/cache
 
 composer-update:
 	docker-compose run --rm php-cli composer update

@@ -23,3 +23,7 @@ services:
       context: docker/php-cli
     volumes:
       - ./:/app
+    environment:
+      APP_DEBUG: 1
+      APP_ENV: dev
+

@@ -3,6 +3,7 @@
 namespace App\Http\Unit;
 
 use App\Http\JsonResponse;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class JsonResponseTest extends TestCase
@@ -15,43 +16,29 @@ class JsonResponseTest extends TestCase
         self::assertEquals(0, $response->getBody()->getContents());
     }
 
-    public function testNull(): void
+    #[DataProvider('getCases')]
+    public function testResponse($source, $expected): void
     {
-        $response = new JsonResponse(null);
+        $response = new JsonResponse($source, 200);
+        self::assertEquals('application/json', $response->getHeaderLine('Content-Type'));
+        self::assertEquals($expected, $response->getBody()->getContents());
         self::assertEquals(200, $response->getStatusCode());
-        self::assertEquals('null', $response->getBody()->getContents());
     }
-
-    public function testInt(): void
-    {
-        $response = new JsonResponse(12);
-        self::assertEquals(200, $response->getStatusCode());
-        self::assertEquals('12', $response->getBody()->getContents());
-    }
-
-    public function testString(): void
-    {
-        $response = new JsonResponse('12');
-        self::assertEquals(200, $response->getStatusCode());
-        self::assertEquals('"12"', $response->getBody()->getContents());
-    }
-
-    public function testObject(): void
+    public static function getCases(): array
     {
         $class = new \stdClass();
         $class->str = 'bar';
         $class->int = 12;
         $class->none = null;
-        $response = new JsonResponse($class, 200);
-        self::assertEquals(200, $response->getStatusCode());
-        self::assertEquals('{"str":"bar","int":12,"none":null}', $response->getBody()->getContents());
-    }
 
-    public function testArray(): void
-    {
         $array = ['str' => 'bar', 'int' => 12, 'none' => null];
-        $response = new JsonResponse($array, 200);
-        self::assertEquals(200, $response->getStatusCode());
-        self::assertEquals('{"str":"bar","int":12,"none":null}', $response->getBody()->getContents());
+
+        return [
+            'null' => [null, 'null'],
+            'empty' => ['', '""'],
+            'string' => ['12', '"12"'],
+            'object' => [$class, '{"str":"bar","int":12,"none":null}'],
+            'array' => [$array, '{"str":"bar","int":12,"none":null}'],
+        ];
     }
 }

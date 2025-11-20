@@ -2,6 +2,7 @@ init: docker-down-clear docker-pull docker-build-pull docker-up app-init
 down: docker-down-clear
 lint: app-lint
 test: app-test
+check: lint test
 
 docker-up:
 	docker-compose up -d

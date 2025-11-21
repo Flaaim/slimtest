@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Unit;
+namespace App\Http\Test\Unit;
 
 use App\Http\JsonResponse;
 use PHPUnit\Framework\Attributes\DataProvider;

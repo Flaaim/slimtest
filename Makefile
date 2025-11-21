@@ -1,4 +1,4 @@
-init: docker-down-clear docker-pull docker-build-pull docker-up app-init
+init: docker-down-clear app-clear docker-pull docker-build docker-up app-init
 down: docker-down-clear
 lint: app-lint
 test: test-unit test-functional
@@ -15,8 +15,11 @@ docker-down-clear:
 docker-pull:
 	docker-compose pull
 
-docker-build-pull:
-	docker-compose build --pull
+docker-build:
+	docker-compose build
+
+app-clear :
+	docker run --rm -v ${PWD}:/app -w /app alpine sh -c 'rm -rf var/cache/* var/log/*'
 
 app-init: composer-install app-permissions
 

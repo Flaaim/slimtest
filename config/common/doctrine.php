@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 use Doctrine\ORM\ORMSetup;
+use Doctrine\ORM\Tools\Console\EntityManagerProvider;
+use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
 use Psr\Container\ContainerInterface;
 
 
@@ -51,5 +53,10 @@ return [
             'metadata_dirs' => [],
             'types' => []
         ]
-    ]
+    ],
+    EntityManagerProvider::class => function (ContainerInterface $container) {
+        return new SingleManagerProvider(
+            $container->get(EntityManagerInterface::class),
+        );
+    }
 ];

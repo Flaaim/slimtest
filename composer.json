@@ -13,7 +13,8 @@
         "ramsey/uuid": "^4.9",
         "webmozart/assert": "^1.12",
         "doctrine/orm": "^3.5",
-        "guzzlehttp/guzzle": "^7.10"
+        "guzzlehttp/guzzle": "^7.10",
+        "doctrine/migrations": "^3.9"
     },
     "autoload": {
       "psr-4": {

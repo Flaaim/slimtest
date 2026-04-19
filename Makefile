@@ -21,13 +21,16 @@ docker-build:
 app-clear :
 	docker run --rm -v ${PWD}:/app -w /app alpine sh -c 'rm -rf var/cache/* var/log/*'
 
-app-init: composer-install app-permissions
+app-init: composer-install app-permissions app-migrations
 
 composer-install:
 	docker-compose run --rm php-cli composer install
 
 app-permissions:
 	docker run --rm -v ${PWD}:/app -w /app alpine chmod 777 var/cache
+
+app-migrations:
+	docker-compose run --rm php-cli composer app migrations:migrate -- --no-interaction
 
 composer-update:
 	docker-compose run --rm php-cli composer update

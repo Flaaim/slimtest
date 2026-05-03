@@ -5,6 +5,6 @@ RUN apk add --no-cache mysql-dev \
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
-COPY ./conf.d /usr/local/etc/php/conf.d
+COPY ./common/php/conf.d /usr/local/etc/php/conf.d
 
 WORKDIR /app

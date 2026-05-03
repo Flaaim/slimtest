@@ -1,6 +1,6 @@
 FROM php:8.3-cli-alpine
 
-RUN apk add --no-cache mysql-dev \
+RUN apk add --no-cache mysql-dev bash coreutils\
     && docker-php-ext-install pdo_mysql mysqli
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
